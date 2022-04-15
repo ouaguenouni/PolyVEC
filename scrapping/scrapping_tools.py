@@ -98,3 +98,4 @@ def extract_xml(xml_l, orateurs_datas = {}, not_found = []):
             data["texte"] = (p.find_all("texte")[0].text)
             datas.append(data)
     return datas
+
