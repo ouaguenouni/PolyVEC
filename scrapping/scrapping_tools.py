@@ -58,7 +58,7 @@ def get_links_page(page):
     link_L = []
     results = requests.get(get_cr_ls(page))
     soup = BeautifulSoup(results.text, 'html.parser')
-    links = soup.find_all('h3', attrs = {"class":"crs-h-seance colored"})
+    links = soup.find_all('h3', attrs = {"class":"crs-h-seance _colored"})
     for li in links:
         children = li.findChildren("a" , recursive=False)
         link_L.append(get_full(children[0].get("href")))

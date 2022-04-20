@@ -1,9 +1,14 @@
-import sqlite3
 import requests
 from bs4 import BeautifulSoup
 from tqdm.notebook import tqdm
+import psycopg2
 
-conn = sqlite3.connect('test.db')
+conn = psycopg2.connect(
+    host="195.154.45.91",
+    database="politicometre",
+    user="politicometre",
+    password="095a520b4023169a50fee97f1c4bb856fbf4e9a8a9ac1247",
+    sslmode ='disable')
 c = conn.cursor()
 
 def extract_xml_simple(xml_l):
@@ -37,15 +42,17 @@ def deputesId():
 
     return  deputes
 
-data = extract_xml_simple("https://www.assemblee-nationale.fr/dyn/opendata/CRSANR5L15S2022O1N164.xml")
-deputes = deputesId()
+def xmlToSQL(url):
 
-for d in data:
-    if d in deputes:
-        for t in data[d]:
-            c.execute('''
-                          INSERT INTO texts ( deputes_id, text) VALUES
-                          (\"''' + str(deputes[d]) + '''\", \'''' + t + '''\');
-                          ''')
+    data = extract_xml_simple("https://www.assemblee-nationale.fr/dyn/opendata/CRSANR5L15S2022O1N164.xml")
+    deputes = deputesId()
 
-conn.commit()
+    for d in data:
+        if d in deputes:
+            for t in data[d]:
+                c.execute('''
+                              INSERT INTO texts ( deputes_id, text) VALUES
+                              (\'''' + str(deputes[d]) + '''\', \'''' + t.replace("'","''") + '''\');
+                              ''')
+
+    conn.commit()
