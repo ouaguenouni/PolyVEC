@@ -20,6 +20,11 @@ c.execute('''
           (id SERIAL PRIMARY KEY, deputes_id INTEGER, text TEXT, FOREIGN KEY(deputes_id) REFERENCES deputes (id));
           ''')
 
+c.execute('''
+          CREATE TABLE IF NOT EXISTS transformation
+          (id SERIAL PRIMARY KEY, text_id INTEGER, type INTEGER, result TEXT, FOREIGN KEY(text_id) REFERENCES texts (id));
+          ''')
+
 with open('../scrapping/scrapping position/results.json', 'r') as f:
   deputes = json.load(f)
 

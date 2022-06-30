@@ -18,29 +18,15 @@ def run(req):
             data[cols[i]].append(it[i])
     return data
 
-
-#conn = sqlite3.connect('test.db')
 c = conn.cursor()
-
-ch = """
-SELECT
-    table_schema || '.' || table_name
-FROM
-    information_schema.tables
-WHERE
-    table_type = 'BASE TABLE'
-AND
-    table_schema NOT IN ('pg_catalog', 'information_schema');
-"""
-
-#result = run(ch).fetchall()
-#print("Result: ", result)
 
 D = run("SELECT * FROM deputes LIMIT 10")
 D = run("SELECT * FROM texts LIMIT 10")
 D = run("SELECT nom, text, x, y from texts join deputes ON deputes.id=texts.deputes_id LIMIT 10")
 df = pd.DataFrame(D)
 print(df)
+
+conn.commit()
 
 #for r in results2:
 #print(r)
