@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  poly_vec:
+    container_name: poly_vec
+    restart : always
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+networks:
+  default:
+    external:
+      name: Qualia
