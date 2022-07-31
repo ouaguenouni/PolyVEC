@@ -1,0 +1,6 @@
+torch
+numpy
+spacy
+pandas
+matplotlib
+sklearn

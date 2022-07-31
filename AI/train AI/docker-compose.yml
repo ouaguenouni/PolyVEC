@@ -1,0 +1,9 @@
+version: '3.7'
+
+services:
+  poly_vec:
+    container_name: ai_train
+    restart : always
+    build:
+      context: .
+      dockerfile: Dockerfile
