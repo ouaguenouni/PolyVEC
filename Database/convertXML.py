@@ -1,4 +1,4 @@
-import requests
+from Experiments import requests
 from bs4 import BeautifulSoup
 from tqdm.notebook import tqdm
 import psycopg2
