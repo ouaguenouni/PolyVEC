@@ -4,3 +4,4 @@ spacy
 pandas
 matplotlib
 sklearn
+psycopg2-binary

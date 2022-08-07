@@ -1,9 +1,11 @@
 version: '3.7'
 
 services:
-  poly_vec:
+  ai_train:
     container_name: ai_train
     restart : always
+    volumes:
+      - ./data:/data
     build:
       context: .
       dockerfile: Dockerfile

@@ -1,4 +1,5 @@
 import pandas as pd
+import psycopg2
 from requests import *
 from tqdm.notebook import tqdm
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -14,6 +15,8 @@ import torch.optim as optim
 import matplotlib.pyplot as plt
 torch.manual_seed(1)
 nlp = spacy.load("fr_core_news_sm")
+
+print("Starting")
 
 def get_df(req):
     """
@@ -138,7 +141,7 @@ for t in range(10000):
     loss.backward()
     optimizer.step()
 
-torch.save(model.state_dict(), 'model_no_embeding.pth')
+torch.save(model.state_dict(), './data/model_no_embeding.pth')
 
 d = get_df("SELECT nom, text, x, y from deputes join texts on texts.deputes_id = deputes.id LIMIT 50000")
 df = pd.DataFrame(d)
@@ -153,7 +156,7 @@ loss_fn = torch.nn.MSELoss(reduction='sum')
 learning_rate = 1e-2
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
-for t in tqdm(range(5000)):
+for t in range(5000):
     y_pred = model(df["text"])
     y_true = torch.tensor(np.array(df[["x", "y"]])).float()
     loss = loss_fn(y_pred, y_true)
@@ -169,4 +172,4 @@ for t in tqdm(range(5000)):
     loss.backward()
     optimizer.step()
 
-torch.save(model.state_dict(), 'model_embeding.pth')
+torch.save(model.state_dict(), './data/model_embeding.pth')

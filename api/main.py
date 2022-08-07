@@ -3,10 +3,10 @@ import random
 
 app = FastAPI()
 
-@app.get("/")
+@app.get("/api/")
 async def root():
     return {"message": "Hello World"}
 
-@app.get("/randPos")
+@app.get("/api/randPos")
 async def randPos():
-    return {"message": random.randrange(0,577)}
+    return {random.randrange(0,577)}
